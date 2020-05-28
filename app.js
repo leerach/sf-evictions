@@ -10,7 +10,7 @@ const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
 // Source data CSV
 const DATA_URL =
-  'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv'; // eslint-disable-line
+  'Eviction_Notices.csv'; // eslint-disable-line
 
 const ambientLight = new AmbientLight({
   color: [255, 255, 255],
@@ -39,8 +39,8 @@ const material = {
 };
 
 const INITIAL_VIEW_STATE = {
-  longitude: -1.4157267858730052,
-  latitude: 52.232395363869415,
+  longitude: -122.4194,
+  latitude: 37.7749,
   zoom: 6.6,
   minZoom: 5,
   maxZoom: 15,
@@ -73,7 +73,7 @@ export default class App extends Component {
   }
 
   _renderLayers() {
-    const {data, radius = 1000, upperPercentile = 100, coverage = 1} = this.props;
+    const {data, radius = 50, upperPercentile = 100, coverage = 1} = this.props;
 
     return [
       new HexagonLayer({
@@ -124,7 +124,22 @@ export function renderToDOM(container) {
 
   require('d3-request').csv(DATA_URL, (error, response) => {
     if (!error) {
-      const data = response.map(d => [Number(d.lng), Number(d.lat)]);
+    
+
+      // var data = response.map(d => [Number(d.Location.substring(d.Location.indexOf('(')+ 1, 27)), Number(d.Location.substring(d.Location.indexOf('(') + 20, d.Location.indexOf(')')))]);
+      
+      const data = response.reduce(function(filtered, d) {
+        var firstNumber = Number(d.Location.substring(d.Location.indexOf('(')+ 1, 27));
+        var secondNumber =  Number(d.Location.substring(d.Location.indexOf('(') + 20, d.Location.indexOf(')')));
+        if (d.Location && !isNaN(firstNumber) && !isNaN(secondNumber)) {
+           var someNewValue = [firstNumber,secondNumber]
+           filtered.push(someNewValue);
+        }
+        return filtered;
+      }, []);
+      
+
+      console.log(data);
       render(<App data={data} />, container);
     }
   });
