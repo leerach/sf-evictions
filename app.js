@@ -41,9 +41,9 @@ const material = {
 const INITIAL_VIEW_STATE = {
   longitude: -122.4194,
   latitude: 37.7749,
-  zoom: 6.6,
-  minZoom: 5,
-  maxZoom: 15,
+  zoom: 10,
+  minZoom: 10,
+  maxZoom: 12,
   pitch: 40.5,
   bearing: -27.396674584323023
 };
@@ -73,7 +73,7 @@ export default class App extends Component {
   }
 
   _renderLayers() {
-    const {data, radius = 50, upperPercentile = 100, coverage = 1} = this.props;
+    const {data, radius = 25, upperPercentile = 99.9, coverage = 0.6} = this.props;
 
     return [
       new HexagonLayer({
@@ -129,9 +129,9 @@ export function renderToDOM(container) {
       // var data = response.map(d => [Number(d.Location.substring(d.Location.indexOf('(')+ 1, 27)), Number(d.Location.substring(d.Location.indexOf('(') + 20, d.Location.indexOf(')')))]);
       
       const data = response.reduce(function(filtered, d) {
+        if (d.Location && !isNaN(Number(d.Location.substring(d.Location.indexOf('(')+ 1, 27))) && !isNaN(Number(d.Location.substring(d.Location.indexOf('(') + 20, d.Location.indexOf(')'))))) {
         var firstNumber = Number(d.Location.substring(d.Location.indexOf('(')+ 1, 27));
         var secondNumber =  Number(d.Location.substring(d.Location.indexOf('(') + 20, d.Location.indexOf(')')));
-        if (d.Location && !isNaN(firstNumber) && !isNaN(secondNumber)) {
            var someNewValue = [firstNumber,secondNumber]
            filtered.push(someNewValue);
         }
