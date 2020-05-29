@@ -10,7 +10,7 @@ const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
 // Source data CSV
 const DATA_URL =
-  'Eviction_Notices.csv'; // eslint-disable-line
+  'Eviction_Notices.geojson'; // eslint-disable-line
 
 const ambientLight = new AmbientLight({
   color: [255, 255, 255],
@@ -144,21 +144,28 @@ export default class App extends Component {
 export function renderToDOM(container) {
   render(<App />, container);
 
-  require('d3-request').csv(DATA_URL, (error, response) => {
+  require('d3-request').json(DATA_URL, (error, response) => {
     if (!error) {
+      console.log(response.features[0].geometry.coordinates);
+      const data = []
+      for (var i = 0; i < response.features.length; i++) {
+        if (response.features[i].geometry != null){
+          data.push(response.features[i].geometry.coordinates);
+        }
+      }
     
 
-      // var data = response.map(d => [Number(d.Location.substring(d.Location.indexOf('(')+ 1, 27)), Number(d.Location.substring(d.Location.indexOf('(') + 20, d.Location.indexOf(')')))]);
+      // // var data = response.map(d => [Number(d.Location.substring(d.Location.indexOf('(')+ 1, 27)), Number(d.Location.substring(d.Location.indexOf('(') + 20, d.Location.indexOf(')')))]);
       
-      const data = response.reduce(function(filtered, d) {
-        if (d.Location && !isNaN(Number(d.Location.substring(d.Location.indexOf('(')+ 1, 27))) && !isNaN(Number(d.Location.substring(d.Location.indexOf('(') + 20, d.Location.indexOf(')'))))) {
-        var firstNumber = Number(d.Location.substring(d.Location.indexOf('(')+ 1, 27));
-        var secondNumber =  Number(d.Location.substring(d.Location.indexOf('(') + 20, d.Location.indexOf(')')));
-           var someNewValue = [firstNumber,secondNumber]
-           filtered.push(someNewValue);
-        }
-        return filtered;
-      }, []);
+      // const data = response.reduce(function(filtered, d) {
+      //   if (d.Location && !isNaN(Number(d.Location.substring(d.Location.indexOf('(')+ 1, 27))) && !isNaN(Number(d.Location.substring(d.Location.indexOf('(') + 20, d.Location.indexOf(')'))))) {
+      //   var firstNumber = Number(d.Location.substring(d.Location.indexOf('(')+ 1, 27));
+      //   var secondNumber =  Number(d.Location.substring(d.Location.indexOf('(') + 20, d.Location.indexOf(')')));
+      //      var someNewValue = [firstNumber,secondNumber]
+      //      filtered.push(someNewValue);
+      //   }
+      //   return filtered;
+      // }, []);
       
 
       render(<App data={data} />, container);
