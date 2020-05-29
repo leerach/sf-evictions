@@ -41,9 +41,9 @@ const material = {
 const INITIAL_VIEW_STATE = {
   longitude: -122.4194,
   latitude: 37.7749,
-  zoom: 10,
+  zoom: 11.3,
   minZoom: 10,
-  maxZoom: 12,
+  maxZoom: 13,
   pitch: 50,
   bearing: -27.396674584323023
 };
@@ -81,7 +81,7 @@ export default class App extends Component {
         colorRange,
         coverage,
         data,
-        elevationRange: [0, 3000],
+        elevationRange: [0, 1000],
         elevationScale: data && data.length ? 50 : 0,
         extruded: true,
         getPosition: d => d,
@@ -92,7 +92,7 @@ export default class App extends Component {
         material,
 
         transitions: {
-          elevationScale: 3000
+          elevationScale: 1000
         }
       })
     ];
