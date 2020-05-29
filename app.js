@@ -44,7 +44,7 @@ const INITIAL_VIEW_STATE = {
   zoom: 10,
   minZoom: 10,
   maxZoom: 12,
-  pitch: 40.5,
+  pitch: 50,
   bearing: -27.396674584323023
 };
 
@@ -124,6 +124,7 @@ export function renderToDOM(container) {
 
   require('d3-request').csv(DATA_URL, (error, response) => {
     if (!error) {
+      console.log(response)
     
 
       // var data = response.map(d => [Number(d.Location.substring(d.Location.indexOf('(')+ 1, 27)), Number(d.Location.substring(d.Location.indexOf('(') + 20, d.Location.indexOf(')')))]);
