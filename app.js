@@ -10,7 +10,7 @@ const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
 // Source data CSV
 const DATA_URL =
-  'https://data.sfgov.org/resource/5cei-gny5.geojson'; // eslint-disable-line
+  'Eviction_Notices.geojson'; // eslint-disable-line
 
 const ambientLight = new AmbientLight({
   color: [255, 255, 255],
@@ -85,8 +85,12 @@ export default class App extends Component {
         elevationScale: data && data.length ? 50 : 0,
         extruded: true,
         getPosition: d => d,
-        onHover: this.props.onHover,
-        pickable: Boolean(this.props.onHover),
+        onHover: info => this.setState({
+          hoveredObject: info.object,
+          pointerX: info.x,
+          pointerY: info.y
+        }),
+        pickable: true,
         radius,
         upperPercentile,
         material,
@@ -96,6 +100,23 @@ export default class App extends Component {
         }
       })
     ];
+  }
+
+  _renderTooltip() {
+    const {hoveredObject, pointerX, pointerY} = this.state || {};
+    return hoveredObject && (
+      <div className="tooltip" style={{left: pointerX, top: pointerY}}>
+          <div>
+            <div> <b>Evictions: {hoveredObject.points.length} </b> </div>
+        </div>
+        <div>
+            <div> Latitude: {Math.round(hoveredObject.position[1]*10000)/10000}&deg;</div>
+        </div>
+        <div>
+            <div> Longitude: {Math.round(hoveredObject.position[0]*10000)/10000}&deg;</div>
+        </div>
+      </div>
+    );
   }
 
   render() {
@@ -114,6 +135,7 @@ export default class App extends Component {
           preventStyleDiffing={true}
           mapboxApiAccessToken={MAPBOX_TOKEN}
         />
+        { this._renderTooltip() }
       </DeckGL>
     );
   }
