@@ -146,7 +146,6 @@ export function renderToDOM(container) {
 
   require('d3-request').json(DATA_URL, (error, response) => {
     if (!error) {
-      console.log(response.features[0].geometry.coordinates);
       const data = []
       for (var i = 0; i < response.features.length; i++) {
         if (response.features[i].geometry != null){
