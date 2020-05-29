@@ -85,8 +85,12 @@ export default class App extends Component {
         elevationScale: data && data.length ? 50 : 0,
         extruded: true,
         getPosition: d => d,
-        onHover: this.props.onHover,
-        pickable: Boolean(this.props.onHover),
+        onHover: info => this.setState({
+          hoveredObject: info.object,
+          pointerX: info.x,
+          pointerY: info.y
+        }),
+        pickable: true,
         radius,
         upperPercentile,
         material,
@@ -96,6 +100,23 @@ export default class App extends Component {
         }
       })
     ];
+  }
+
+  _renderTooltip() {
+    const {hoveredObject, pointerX, pointerY} = this.state || {};
+    return hoveredObject && (
+      <div className="tooltip" style={{left: pointerX, top: pointerY}}>
+          <div>
+            <div> <b>Evictions: {hoveredObject.points.length} </b> </div>
+        </div>
+        <div>
+            <div> Latitude: {Math.round(hoveredObject.position[1]*10000)/10000}&deg;</div>
+        </div>
+        <div>
+            <div> Longitude: {Math.round(hoveredObject.position[0]*10000)/10000}&deg;</div>
+        </div>
+      </div>
+    );
   }
 
   render() {
@@ -114,6 +135,7 @@ export default class App extends Component {
           preventStyleDiffing={true}
           mapboxApiAccessToken={MAPBOX_TOKEN}
         />
+        { this._renderTooltip() }
       </DeckGL>
     );
   }
@@ -124,7 +146,6 @@ export function renderToDOM(container) {
 
   require('d3-request').csv(DATA_URL, (error, response) => {
     if (!error) {
-      console.log(response)
     
 
       // var data = response.map(d => [Number(d.Location.substring(d.Location.indexOf('(')+ 1, 27)), Number(d.Location.substring(d.Location.indexOf('(') + 20, d.Location.indexOf(')')))]);
@@ -140,7 +161,6 @@ export function renderToDOM(container) {
       }, []);
       
 
-      console.log(data);
       render(<App data={data} />, container);
     }
   });
