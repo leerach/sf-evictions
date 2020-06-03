@@ -9,8 +9,7 @@ import DeckGL from '@deck.gl/react';
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
 // Source data CSV
-const DATA_URL =
-  'Eviction_Notices.geojson'; // eslint-disable-line
+const DATA_URL = "Eviction_Notices.geojson"; // eslint-disable-line
 
 const ambientLight = new AmbientLight({
   color: [255, 255, 255],
@@ -74,48 +73,64 @@ export default class App extends Component {
 
   _renderLayers() {
     const {data, radius = 25, upperPercentile = 99.9, coverage = 0.6} = this.props;
+    const currentYear = 1997;
+    const TRANSPARENT_COLOR = [255, 255, 255];
+    console.log(data)
 
     return [
       new HexagonLayer({
-        id: 'heatmap',
+        id: "heatmap",
         colorRange,
         coverage,
         data,
         elevationRange: [0, 1000],
         elevationScale: data && data.length ? 50 : 0,
         extruded: true,
-        getPosition: d => d,
-        onHover: info => this.setState({
-          hoveredObject: info.object,
-          pointerX: info.x,
-          pointerY: info.y
-        }),
+        getPosition: (d) => d.geometry.coordinates,
+        parameters: {
+          depthMask: false,
+        },
+        getFillColor: f => parseInt(f.properties.file_date.substring(0,5)) === currentYear ? BUILDING_COLOR : [TRANSPARENT_COLOR],
+        updateTriggers: {
+          getFillColor: currentYear
+        },
+        onHover: (info) =>
+          this.setState({
+            hoveredObject: info.object,
+            pointerX: info.x,
+            pointerY: info.y,
+          }),
         pickable: true,
         radius,
         upperPercentile,
         material,
 
         transitions: {
-          elevationScale: 1000
-        }
-      })
+          elevationScale: 1000,
+        },
+      }),
     ];
   }
 
   _renderTooltip() {
     const {hoveredObject, pointerX, pointerY} = this.state || {};
-    return hoveredObject && (
-      <div className="tooltip" style={{left: pointerX, top: pointerY}}>
+    console.log(hoveredObject)
+    return (
+      hoveredObject && (
+        <div className="tooltip" style={{ left: pointerX, top: pointerY }}>
           <div>
-            <div> <b>Evictions: {hoveredObject.points.length} </b> </div>
+            <b>{hoveredObject.points[0].properties.address}</b>
+          </div>
+          <div>
+            <div>
+              Neighborhood: {hoveredObject.points[0].properties.neighborhood}
+            </div>
+          </div>
+          <div>
+            <b>Evictions: {hoveredObject.points.length}</b>
+          </div>
         </div>
-        <div>
-            <div> Latitude: {Math.round(hoveredObject.position[1]*10000)/10000}&deg;</div>
-        </div>
-        <div>
-            <div> Longitude: {Math.round(hoveredObject.position[0]*10000)/10000}&deg;</div>
-        </div>
-      </div>
+      )
     );
   }
 
@@ -149,7 +164,7 @@ export function renderToDOM(container) {
       const data = []
       for (var i = 0; i < response.features.length; i++) {
         if (response.features[i].geometry != null){
-          data.push(response.features[i].geometry.coordinates);
+          data.push(response.features[i]);
         }
       }
     
