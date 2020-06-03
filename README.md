@@ -1,7 +1,8 @@
-This is a minimal standalone version of the 3DHeatmap example
-on [deck.gl](http://deck.gl) website.
+# Evictions in San Fransisco 3D Geospatial visualization using Deck.gl, Mapbox, and Open SFData.
 
-### Usage
+![](EvictionsVisual.png)
+
+### Local Usage Instructions:
 
 Copy the content of this folder to your project. 
 
