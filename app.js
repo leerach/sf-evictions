@@ -9,7 +9,7 @@ import DeckGL from '@deck.gl/react';
 const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
 // Source data CSV
-const DATA_URL = "Eviction_Notices.geojson"; // eslint-disable-line
+const DATA_URL = "data/Eviction_Notices.geojson"; // eslint-disable-line
 
 const ambientLight = new AmbientLight({
   color: [255, 255, 255],
