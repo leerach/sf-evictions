@@ -1,6 +1,6 @@
 # Evictions in San Fransisco 3D Geospatial visualization using Deck.gl, Mapbox, and Open SFData.
 
-![](EvictionsVisual.png)
+![](images/EvictionsVisual.png)
 
 ### Local Usage Instructions:
 
