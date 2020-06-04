@@ -4,14 +4,19 @@
 const webpack = require('webpack');
 
 const CONFIG = {
-  mode: 'development',
+  mode: "development",
 
   entry: {
-    app: './app.js'
+    app: "./app.js",
   },
 
   output: {
-    library: 'App'
+    library: "App",
+  },
+
+  devServer: {
+    inline: true,
+    port: process.env.PORT || 5000,
   },
 
   module: {
@@ -20,17 +25,17 @@ const CONFIG = {
         // Transpile ES6 to ES5 with babel
         // Remove if your app does not use JSX or you don't need to support old browsers
         test: /\.js$/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         exclude: [/node_modules/],
         options: {
-          presets: ['@babel/preset-react']
-        }
-      }
-    ]
+          presets: ["@babel/preset-react"],
+        },
+      },
+    ],
   },
 
   // Optional: Enables reading mapbox token from environment variable
-  plugins: [new webpack.EnvironmentPlugin(['MapboxAccessToken'])]
+  plugins: [new webpack.EnvironmentPlugin(["MapboxAccessToken"])],
 };
 
 // This line enables bundling against src in this repo rather than installed module
