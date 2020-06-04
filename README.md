@@ -4,6 +4,10 @@
 
 ![](images/EvictionsVisual.png)
 
+### Project Description:
+
+###### Due to the novel Covid-19 pandemic, millions of people in the U.S have filed for unemployment leaving many individuals and families in these communities wondering how they will pay their rents. Concentrating on the city of San Francisco, this data visualization depicts the number of evictions in each neighborhood over time from 1997 to present day. This visual hopes to provide a clear illustration on which communities were most impacted by evictions due to Covid-19.
+
 ### Local Usage Instructions:
 
 Fork and clone this repository.
