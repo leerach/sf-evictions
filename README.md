@@ -6,7 +6,7 @@
 
 ### Local Usage Instructions:
 
-Copy the content of this folder to your project. 
+Fork and clone this repository.
 
 To see the base map, you need a [Mapbox access token](https://docs.mapbox.com/help/how-mapbox-works/access-tokens/). You can either set an environment variable:
 
