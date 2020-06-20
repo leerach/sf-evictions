@@ -168,7 +168,7 @@ export function renderToDOM(container) {
         }
       }
     
-
+      /** Formatting Data with CSV file */
       // // var data = response.map(d => [Number(d.Location.substring(d.Location.indexOf('(')+ 1, 27)), Number(d.Location.substring(d.Location.indexOf('(') + 20, d.Location.indexOf(')')))]);
       
       // const data = response.reduce(function(filtered, d) {
