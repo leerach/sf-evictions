@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "heroku-prebuild": "npm install --dev",
-    "start": "webpack-dev-server --port $PORT --host 0.0.0.0 --progress --hot --open"
+    "start": "webpack-dev-server --port $PORT --host 0.0.0.0"
   },
   "dependencies": {
     "@material-ui/core": "^4.10.0",
