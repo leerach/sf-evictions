@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "heroku-prebuild": "npm install --dev",
-    "start-local": "webpack-dev-server --env.local --progress --hot --open",
-    "start": "webpack-dev-server --progress --hot --open"
+    "start-local": "webpack-dev-server --port $PORT --host 0.0.0.0  --progress --hot --open",
+    "start": "webpack-dev-server --port $PORT --host 0.0.0.0 --progress --hot --open"
   },
   "dependencies": {
     "@material-ui/core": "^4.10.0",
@@ -25,6 +25,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "engines": {
-    "node": "13.12.0"
+    "node": "13.x",
+    "npm": "6.x"
   }
 }
