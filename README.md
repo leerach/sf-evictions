@@ -6,7 +6,7 @@
 
 ### Project Description:
 
-###### Due to the novel Covid-19 pandemic, millions of people in the U.S have filed for unemployment leaving many individuals and families in these communities wondering how they will pay their rents. Concentrating on the city of San Francisco, this data visualization depicts the number of evictions in each neighborhood over time from 1997 to present day. This visual hopes to provide a clear illustration on which communities were most impacted by evictions due to Covid-19.
+###### With an ongoing housing crises crippling affordable housing for many communities in the Bay Area, this 3D geospatial visualization illustrates the number of evictions from 1997 to present day in San Fransisco. This visual aims to depict the number of eviction notices for each neighborhood and bring awareness to the communities most impacted by evictions.
 
 ### Local Usage Instructions:
 
